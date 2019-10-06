@@ -34,6 +34,7 @@ function preload() {
   this.load.tilemapTiledJSON("map", "../assets/tilemaps/dungtest.json");
 
   this.load.atlas("atlas", "../assets/atlas/atlas.png", "../assets/atlas/atlas.json");
+  this.load.spritesheet("dragon", "../assets/images/FlameTail v2.png", {frameWidth: 16, frameHeight: 16});
 }
 
 function create() {
@@ -60,16 +61,65 @@ function create() {
 
       // Create a sprite with physics enabled via the physics system. The image used for the sprite has
       // a bit of whitespace, so I'm using setSize & setOffset to control the size of the player's body.
+      /*
       player = this.physics.add
         .sprite(spawnPoint.x, spawnPoint.y, "atlas", "misa-front")
         .setSize(30, 40)
-        .setOffset(0, 24);
+        .setOffset(0, 24);*/
+        player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "dragon");
+        //player.frame = 1;
+
+
 
       // Watch the player and worldLayer for collisions, for the duration of the scene:
       this.physics.add.collider(player, walls);
 
+      const anims = this.anims;
+      anims.create({
+        key: 'left',
+        frames: anims.generateFrameNumbers("dragon", {start: 8, end: 11}),
+        repeat: -1
+      });
+      anims.create({
+        key: 'right',
+        frames: anims.generateFrameNumbers("dragon", {start: 12, end: 15}),
+        repeat: -1
+      });
+      anims.create({
+        key: 'up',
+        frames: anims.generateFrameNumbers("dragon", {start: 4, end: 7}),
+        repeat: -1
+      });
+      anims.create({
+        key: 'down',
+        frames: anims.generateFrameNumbers("dragon", {start: 0, end: 3}),
+        repeat: -1
+      });
+      anims.create({
+        key: 'idle-left',
+        frames: anims.generateFrameNumbers("dragon", {start: 11, end: 11}),
+        repeat: -1
+      });
+      anims.create({
+        key: 'idle-right',
+        frames: anims.generateFrameNumbers("dragon", {start: 15, end: 15}),
+        repeat: -1
+      });
+      anims.create({
+        key: 'idle-up',
+        frames: anims.generateFrameNumbers("dragon", {start: 5, end: 5}),
+        repeat: -1
+      });
+      anims.create({
+        key: 'idle-down',
+        frames: anims.generateFrameNumbers("dragon", {start: 0, end: 0}),
+        repeat: -1
+      });
+
+
       // Create the player's walking animations from the texture atlas. These are stored in the global
       // animation manager so any sprite can access them.
+      /*
       const anims = this.anims;
       anims.create({
         key: "misa-left-walk",
@@ -114,7 +164,8 @@ function create() {
         }),
         frameRate: 10,
         repeat: -1
-      });
+      });*/
+
 
 
   const camera = this.cameras.main;
@@ -179,20 +230,20 @@ function update(time, delta) {
 
     // Update the animation last and give left/right animations precedence over up/down animations
     if (cursors.left.isDown) {
-      player.anims.play("misa-left-walk", true);
+      player.anims.play("left", true);
     } else if (cursors.right.isDown) {
-      player.anims.play("misa-right-walk", true);
+      player.anims.play("right", true);
     } else if (cursors.up.isDown) {
-      player.anims.play("misa-back-walk", true);
+      player.anims.play("up", true);
     } else if (cursors.down.isDown) {
-      player.anims.play("misa-front-walk", true);
+      player.anims.play("down", true);
     } else {
       player.anims.stop();
 
       // If we were moving, pick and idle frame to use
-      if (prevVelocity.x < 0) player.setTexture("atlas", "misa-left");
-      else if (prevVelocity.x > 0) player.setTexture("atlas", "misa-right");
-      else if (prevVelocity.y < 0) player.setTexture("atlas", "misa-back");
-      else if (prevVelocity.y > 0) player.setTexture("atlas", "misa-front");
+      if (prevVelocity.x < 0)      player.anims.play("idle-left", true);
+      else if (prevVelocity.x > 0) player.anims.play("idle-right", true);
+      else if (prevVelocity.y < 0) player.anims.play("idle-up", true);
+      else if (prevVelocity.y > 0) player.anims.play("idle-down", true);
     }
 }
