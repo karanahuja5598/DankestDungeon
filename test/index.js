@@ -1,4 +1,8 @@
 import LevelOne from "./level1.js";
+import Meanmenu from "./menu.js"
+//import UIPlugin from ;
+
+var arr = [Meanmenu ,LevelOne];
 
 const config = {
   type: Phaser.AUTO,
@@ -7,7 +11,7 @@ const config = {
   backgroundColor: "#000",
   parent: "game-container",
   pixelArt: true,
-  scene: LevelOne,
+  scene: arr,
   physics: {
       default: "arcade",
       arcade: {
