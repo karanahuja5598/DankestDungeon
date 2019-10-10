@@ -1,8 +1,8 @@
 import LevelOne from "./level1.js";
-import Meanmenu from "./menu.js"
+import MeanMenu from "./menu.js"
 //import UIPlugin from ;
 
-var arr = [Meanmenu ,LevelOne];
+var arr = [MeanMenu ,LevelOne];
 
 const config = {
   type: Phaser.AUTO,
