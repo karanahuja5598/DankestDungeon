@@ -27,6 +27,7 @@ export default class LevelOne extends Phaser.Scene {
 //                    sceneKey: 'rexUI'
 //                });
         this.load.scenePlugin("rexUI", "../phaser3-rex-notes-master/phaser3-rex-notes-master/plugins/dist/rexuiplugin.min.js");
+        this.load.image("heart", "../assets/images/heart.png");
     }
 
     create() {
@@ -55,12 +56,15 @@ export default class LevelOne extends Phaser.Scene {
         this.player.sprite.setCollideWorldBounds(true);
         this.shop.sprite.setCollideWorldBounds(true);
 
+
+
+
         //add interaction for player and shop
         this.physics.add.overlap(this.player.sprite, this.shop.sprite, check, null, this);
 
         function check(player, shop){
             this.input.keyboard.once("keydown_A", event => {
-                    this.add.text(200, 200, 'Arrow keys to move\nPress "D" to show hitboxes', {
+                    this.add.text(200, 200, 'Buy and Sell Items here', {
                                   font: "18px monospace",
                                   fill: "#000000",
                                   padding: { x: 20, y: 10 },
@@ -68,7 +72,7 @@ export default class LevelOne extends Phaser.Scene {
                              }).setScrollFactor(0).setDepth(30);
             });
         }
-        
+
 
         const camera = this.cameras.main;
         camera.startFollow(this.player);
@@ -95,7 +99,16 @@ export default class LevelOne extends Phaser.Scene {
                 faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
             });
         });
-        
+
+        //add player health bar
+        var health = [];
+        var xcoord = 30;
+        var ycoord = 510;
+        for(var i = 0; i < 10; i++) {
+          health.push(this.add.image(xcoord + i*32,ycoord,'heart'));
+          //health[i].setScale(0.5);
+        }
+        this.add.text(xcoord, ycoord + 32, "Health");
     }
 
     update(time, delta) {
