@@ -9,8 +9,6 @@ import Shopkeeper from "./shopkeeper.js"
 import Character from "./character.js"
 
 
-
-
 export default class LevelOne extends Phaser.Scene {
 
     constructor(){
@@ -21,13 +19,10 @@ export default class LevelOne extends Phaser.Scene {
         this.load.image("tiles", "../assets/tilesets/dungeonTileset.png");
         this.load.tilemapTiledJSON("map", "../assets/tilemaps/dungtest.json");
         this.load.spritesheet("dragon", "../assets/images/FlameTail v2.png", {frameWidth: 16, frameHeight: 16});
-//        this.load.scenePlugin({
-//                    key: 'rexuiplugin',
-//                    url: 'https://rawgithubusercontent.com/rexrainbow/phaser3-rex-notes/master/plugins/dist/rexuiplugin.min.js',
-//                    sceneKey: 'rexUI'
-//                });
-        this.load.scenePlugin("rexUI", "../phaser3-rex-notes-master/phaser3-rex-notes-master/plugins/dist/rexuiplugin.min.js");
         this.load.image("heart", "../assets/images/heart.png");
+        this.load.image("button", "../assets/images/button_button.png");
+                this.load.image("exit", "../assets/images/button_exit.png");
+
     }
 
     create() {
@@ -56,20 +51,21 @@ export default class LevelOne extends Phaser.Scene {
         this.player.sprite.setCollideWorldBounds(true);
         this.shop.sprite.setCollideWorldBounds(true);
 
-
-
-
         //add interaction for player and shop
         this.physics.add.overlap(this.player.sprite, this.shop.sprite, check, null, this);
 
         function check(player, shop){
             this.input.keyboard.once("keydown_A", event => {
-                    this.add.text(200, 200, 'Buy and Sell Items here', {
-                                  font: "18px monospace",
-                                  fill: "#000000",
-                                  padding: { x: 20, y: 10 },
-                                  backgroundColor: "#ffffff"
-                             }).setScrollFactor(0).setDepth(30);
+            var sprite_a = this.add.sprite(0,0,"button").setInteractive();
+            var sprite_b = this.add.sprite(0,0,"button");
+            var sprite_c = this.add.sprite(0,0,"button");
+            var sprite_d = this.add.sprite(0,0, "exit").setInteractive();
+
+            var column = new uiWidgets.Column(this, 300, 300);
+            column.addNode(sprite_a.on('pointerdown', () => { console.log('pointerdown'); }));
+            column.addNode(sprite_b);
+            column.addNode(sprite_c);
+            column.addNode(sprite_d.on('pointerdown', () => { column.destroy(); }));
             });
         }
 
