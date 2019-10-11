@@ -57,8 +57,8 @@ export default class LevelOne extends Phaser.Scene {
         function check(player, shop){
             this.input.keyboard.once("keydown_A", event => {
             var sprite_a = this.add.sprite(0,0,"button").setInteractive();
-            var sprite_b = this.add.sprite(0,0,"button");
-            var sprite_c = this.add.sprite(0,0,"button");
+            var sprite_b = this.add.sprite(0,0,"button").setInteractive();
+            var sprite_c = this.add.sprite(0,0,"button").setInteractive();
             var sprite_d = this.add.sprite(0,0, "exit").setInteractive();
 
             var column = new uiWidgets.Column(this, 300, 300);

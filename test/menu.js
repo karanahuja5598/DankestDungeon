@@ -7,7 +7,7 @@ export default class MeanMenu extends Phaser.Scene{
     }
 
     preload(){
-        this.load.spritesheet('button', "../assets/images/Start-Game.png", {frameWidth: 100, frameHeight: 100})
+        this.load.spritesheet('startButton', "../assets/images/Start-Game.png", {frameWidth: 100, frameHeight: 100})
         this.load.image('logo', '../assets/images/danklogo.png');
         this.load.image('background', '../assets/images/menu-background.jpg');
     }
@@ -21,7 +21,7 @@ export default class MeanMenu extends Phaser.Scene{
         logo.setScale(2);
 
 
-        var button = this.add.image(400, 400, 'button');
+        var button = this.add.image(400, 400, 'startButton');
         button.setInteractive();
         button.on("pointerdown", () => {this.scene.start("LevelOne");});
 
